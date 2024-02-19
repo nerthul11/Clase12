@@ -1,0 +1,16 @@
+{% extends "AppCoder/base.html" %}
+{% load static %}
+{% block body %}
+<h1>Login</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+        {{ form.as_p }}
+    <button type="submit">Inciar sesion</button>
+</form>
+{% if mensaje %}
+    <p>
+        {{mensaje}}
+    </p>
+{% endif %}
+{% endblock %}

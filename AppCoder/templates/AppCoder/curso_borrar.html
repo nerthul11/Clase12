@@ -1,0 +1,12 @@
+{% extends "AppCoder/base.html" %}
+{% load static %}
+{% block body %}
+<h1>Borrar Curso</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    Estas seguro que deseas borrar el curso {{curso.nombre}} - camada {{curso.camada}}??
+    <input type="submit" value="Eliminar">
+</form>
+{% endblock body %}
+

@@ -1,0 +1,15 @@
+{% extends "AppCoder/base.html" %}
+
+{% block body %}
+{% if formulario.errors %}
+    <p style="color: red">Hubo errores en el tipo de dato.</p>
+{% endif %}
+<form action="" method="post">
+    {% csrf_token %}
+    <!-- Aca esta la magia de Django-->
+    <table>
+        {{formulario.as_table}}
+    </table>
+    <input type="submit" value="Enviar">
+</form>
+{% endblock %}
