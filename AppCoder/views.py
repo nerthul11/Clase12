@@ -29,11 +29,12 @@ def cursos(request):
 def profesores(request):
       if request.method == "POST":
             formulario = forms.Form_Profesor(request.POST)
-            if formulario.is_valid:
+            if formulario.is_valid():
                   informacion = formulario.cleaned_data
                   profesor = models.Profesor(nombre=informacion["nombre"], apellido=informacion["apellido"], email=informacion["email"], profesion=informacion["profesion"])
                   profesor.save()
                   formulario = forms.Form_Profesor()
+                  profesores = models.Profesor.objects.all()
                   contexto= {"profesores": profesores, "formulario": formulario} 
                   return render(request, "AppCoder/profesores.html", contexto)
       else:
@@ -75,7 +76,6 @@ def login_request(request):
 
 # Vista de registro
 def register(request):
-
       if request.method == 'POST':
             form = forms.Form_Registro(request.POST)
             if form.is_valid():
@@ -92,23 +92,6 @@ class CursoListView(ListView):
     context_object_name = "cursos"
     template_name = "AppCoder/curso_lista.html"
 
-    # ESTA PARTE DE GET_QUERYSET Y GET_CONTEXT_DATA NO ESTA EN LA CLASE
-    # COMENTARLO PARA QUE VEAN COMO IMPLEMENTAR EL BUSCADOR EN LAS CBV
-    # https://docs.djangoproject.com/en/4.1/ref/class-based-views/mixins-multiple-object/#django.views.generic.list.MultipleObjectMixin.get_queryset
-    
-    #def get_queryset(self):
-    #    camada = self.request.GET.get('camada', '')
-    #    if camada:
-    #        cursos = self.model.objects.filter(camada__icontains=camada)
-    #    else:
-    #        cursos = self.model.objects.all()
-    #    return cursos
-
-    #def get_context_data(self, **kwargs):
-    #    context = super().get_context_data(**kwargs)
-    #    context["formulario"] = BusquedaAuto()
-    #    return context
-
 class CursoDetailView(DetailView):
     model = models.Curso
     template_name = "AppCoder/curso_detalle.html"
@@ -123,7 +106,7 @@ class CursoUpdateView(LoginRequiredMixin, UpdateView):
     model = models.Curso
     template_name = "AppCoder/curso_editar.html"
     success_url = reverse_lazy('ListaCursos')
-    fields = ['nombre', 'camada']
+    fields = ['nombre']
 
 class CursoDeleteView(LoginRequiredMixin, DeleteView):
     model = models.Curso

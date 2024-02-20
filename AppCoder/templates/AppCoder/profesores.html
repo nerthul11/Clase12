@@ -15,7 +15,11 @@
 {% endblock %}
 
 {% block otroblock %}
+{% if profesores %}
+<ul>
 {% for p in profesores %}
         <li>{{p}}</li>
 {% endfor %}
+</ul>
+{% endif %}
 {% endblock %}
