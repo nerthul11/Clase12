@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from AppCoder import models
 
 class Form_Curso(forms.Form):
     curso = forms.CharField()

@@ -1,11 +1,12 @@
 {% extends "AppCoder/base.html" %}
 {% load static %}
 {% block body %}
-<h1>Login</h1>
+<h1>Editar Estudiante</h1>
 
 <form action="" method="POST">
     {% csrf_token %}
-        {{ form.as_p }}
-    <button type="submit">Inciar sesion</button>
+    {{form.as_p}}
+    <input type="submit" value="Editar">
 </form>
-{% endblock %}
+{% endblock body %}
+

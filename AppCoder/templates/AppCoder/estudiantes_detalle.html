@@ -1,0 +1,12 @@
+{% extends "AppCoder/base.html" %}
+{% load static %}
+{% block body %}
+<h1>Estudiante Detalle</h1>
+
+<p>Nombre del Estudiante: <i>{{estudiante.nombre}}</i></p>
+<p>Apellido del Estudiante: <i>{{estudiante.apellido}}</i></p>
+<p>
+    <a href="{% url 'Lista_Estudiantes' %}">Regresar</a>
+</p>
+{% endblock body %}
+

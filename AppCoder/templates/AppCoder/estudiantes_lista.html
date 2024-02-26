@@ -1,0 +1,25 @@
+{% extends "AppCoder/base.html" %}
+{% load static %}
+{% block body %}
+<h1>Listado de Estudiantes</h1>
+
+<a href={% url 'Nuevo_Estudiante' %}>Nuevo Estudiante</a>
+
+{% if estudiantes %}
+{% for estudiante in estudiantes %}
+<li>Nombre: {{estudiante.nombre}}
+    <p>
+        <a href="{% url 'Detalle_Estudiante' estudiante.pk %}">Ver</a>
+        |
+        <a href="{% url 'Editar_Estudiante' estudiante.pk %}">Editar</a>
+        |
+        <a href="{% url 'Borrar_Estudiante' estudiante.pk %}">Borrar</a>
+    </p>
+</li>
+
+{% endfor %}
+{% else %}
+<p>No se encontraron resultados.</p>
+{% endif %}
+{% endblock body %}
+

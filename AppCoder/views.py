@@ -25,7 +25,7 @@ def cursos(request):
         contexto = {"formulario": formulario}
         return render(request, "AppCoder/cursos.html", contexto)
 
-
+@login_required
 def profesores(request):
       if request.method == "POST":
             formulario = forms.Form_Profesor(request.POST)
@@ -106,9 +106,39 @@ class CursoUpdateView(LoginRequiredMixin, UpdateView):
     model = models.Curso
     template_name = "AppCoder/curso_editar.html"
     success_url = reverse_lazy('ListaCursos')
-    fields = ['nombre']
-
+    fields = ['nombre', 'camada']
+    
 class CursoDeleteView(LoginRequiredMixin, DeleteView):
     model = models.Curso
     template_name = "AppCoder/curso_borrar.html"
     success_url = reverse_lazy('ListaCursos')
+
+# Create
+class Crear_Estudiante(CreateView):
+    model = models.Estudiante
+    template_name = "AppCoder/estudiante_crear.html"
+    success_url = reverse_lazy('Lista_Estudiantes')
+    fields = ['nombre', 'apellido', 'email']
+
+# Read
+class Listar_Estudiantes(ListView):
+    model = models.Estudiante
+    context_object_name = "estudiantes"
+    template_name = "AppCoder/estudiantes_lista.html"
+    
+class Detallar_Estudiante(DetailView):
+    model = models.Estudiante
+    template_name = "AppCoder/estudiantes_detalle.html"
+
+# Update
+class Editar_Estudiante(LoginRequiredMixin, UpdateView):
+    model = models.Estudiante
+    template_name = "AppCoder/estudiantes_editar.html"
+    success_url = reverse_lazy('Lista_Estudiantes')
+    fields = ['nombre', 'apellido', 'email']
+
+# Delete    
+class Borrar_Estudiante(LoginRequiredMixin, DeleteView):
+    model = models.Estudiante
+    template_name = "AppCoder/estudiantes_borrar.html"
+    success_url = reverse_lazy('Lista_Estudiantes')
