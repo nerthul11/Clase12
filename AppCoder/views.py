@@ -2,10 +2,11 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from AppCoder import forms, models
 from django.views.generic import ListView, DeleteView, DetailView, CreateView, UpdateView
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import PasswordChangeView
 
 
 def inicio(request):
@@ -85,7 +86,30 @@ def register(request):
       else:
             form = forms.Form_Registro()     
       return render(request,"AppCoder/register.html" ,  {"form":form})
-  
+
+# Vista de editar el perfil
+@login_required
+def editarPerfil(request):
+    usuario = request.user
+    if request.method == 'POST':
+        miFormulario = forms.UserEditForm(request.POST, request.FILES, instance=request.user)
+        if miFormulario.is_valid():
+            if miFormulario.cleaned_data.get('imagen'):
+                if hasattr(usuario, 'avatar'):
+                    usuario.avatar.imagen = miFormulario.cleaned_data.get('imagen')
+                    usuario.avatar.save()
+                else:
+                    models.Avatar.objects.create(user=usuario, imagen=miFormulario.cleaned_data.get('imagen'))
+            miFormulario.save()
+            return render(request, "AppCoder/inicio.html")
+    else:
+        miFormulario = forms.UserEditForm(instance=request.user)
+    return render(request, "AppCoder/editar_perfil.html", {"miFormulario": miFormulario, "usuario": usuario})
+
+class CambiarClave(LoginRequiredMixin, PasswordChangeView):
+    template_name = 'AppCoder/cambiar_clave.html'
+    success_url = reverse_lazy('EditarPerfil')
+
 # List views
 class CursoListView(ListView):
     model = models.Curso
@@ -137,7 +161,7 @@ class Editar_Estudiante(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('Lista_Estudiantes')
     fields = ['nombre', 'apellido', 'email']
 
-# Delete    
+# Delete
 class Borrar_Estudiante(LoginRequiredMixin, DeleteView):
     model = models.Estudiante
     template_name = "AppCoder/estudiantes_borrar.html"

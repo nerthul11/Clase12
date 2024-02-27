@@ -1,0 +1,30 @@
+{% extends "AppCoder/base.html" %}
+
+{% load static %}
+
+{% block body %}
+
+    <!--Aquí va lo que cambia, y lo asociado a está vista :) -->
+    <h1>Formulario - Editar Perfil</h1>
+    <h1>De {{usuario}}</h1>
+    
+
+    <form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+
+        <!-- Acá está la magia de Django-->
+        
+        <table>
+
+            {{ miFormulario }}
+
+        </table>
+
+        <input type="submit", value="Enviar">
+
+    </form>
+</br>
+    <button type='button'>
+        <a class="navbar-brand" href="{% url 'CambiarClave' %}">Cambiar clave</a>
+    </button>
+
+{% endblock %}

@@ -9,6 +9,7 @@
 {% for estudiante in estudiantes %}
 <li>Nombre: {{estudiante.nombre}}
     <p>
+        {% if request.user.is_authenticated and request.user.is_superuser %}
         <a href="{% url 'Detalle_Estudiante' estudiante.pk %}">Ver</a>
         |
         <a href="{% url 'Editar_Estudiante' estudiante.pk %}">Editar</a>

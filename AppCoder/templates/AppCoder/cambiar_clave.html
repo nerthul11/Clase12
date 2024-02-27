@@ -1,0 +1,17 @@
+{% extends "AppCoder/base.html" %}
+
+
+{% load static %}
+
+
+{% block body %}
+<h1>Cambiar clave</h1>
+<form action='' method="POST">
+    {% csrf_token %}
+    <table>
+        {{form}}
+    </table>
+    <button>Cambiar</button>
+</form>
+
+{% endblock %}
